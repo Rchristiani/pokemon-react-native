@@ -5,3 +5,5 @@ npm-debug.*
 *.p12
 *.key
 *.mobileprovision
+__generated__
+graphql-schema.json

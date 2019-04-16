@@ -1,21 +1,29 @@
-import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import Home from "./screens/Home";
+import SingleView from "./screens/SingleView";
+import { createStackNavigator, createAppContainer } from "react-navigation";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>TypeScript</Text>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const client = new ApolloClient({
+  uri: "https://graphql-pokemon.now.sh/graphql"
 });
+
+const AppNavigation = createStackNavigator({
+  Home: {
+    screen: Home
+  },
+  Single: {
+    screen: SingleView
+  }
+});
+
+const WrapperApp = createAppContainer(AppNavigation);
+
+export default () => {
+  return (
+    <ApolloProvider client={client}>
+      <WrapperApp />
+    </ApolloProvider>
+  );
+};
